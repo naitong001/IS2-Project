@@ -23,7 +23,7 @@ client.on('message', function (topic, message) {
 })
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Bello World!')
 })
 
 app.listen(port, () => {
