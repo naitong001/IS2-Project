@@ -11,11 +11,11 @@ const mongoose = require('mongoose');
 //main().catch(err => console.log(err));
 
 //async function main() {
-mongoose.connect('mongodb+srv://6317700001:mutacth@watervalue.e39wv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+try{
+mongoose.connect('mongodb+srv://6317700001:mutacth@waterdb.e39wv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
 const hardwareId = mongoose.model('hardwareData', { id: String });
-const waterValue = mongoose.model('WaterValue', { value: String, timestamp: String});
-//}
-//////
+const waterValue = mongoose.model('WaterValue', {id: String ,value: Number, timestamp: String});
+
 client.on('connect', function () {
   client.subscribe('watervalue/1', function (err) {
     if (!err) {
@@ -32,7 +32,10 @@ client.on('connect', function () {
 client.on('message', function (topic, message) {
   // message is Buffer
   if(topic == 'watervalue/1'){
-    const wvalue = new waterValue({ value: message.toString(), timestamp: dayjs().format('DD/MM/YYYY')});
+    //JSON PART 
+    const jsonck = JSON.parse(message);
+    console.log(jsonck);
+    const wvalue = new waterValue({ id: jsonck.id ,value: jsonck.total_usage, timestamp: dayjs().format('DD/MM/YYYY')});
     wvalue.save();
   }
   if(topic == 'hwid/1'){
@@ -52,3 +55,10 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+}
+catch(err){
+  console.log(err)
+}
+
+//}
+//////
