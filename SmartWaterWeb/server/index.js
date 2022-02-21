@@ -12,9 +12,9 @@ const mongoose = require('mongoose');
 
 //async function main() {
 try{
-mongoose.connect('mongodb+srv://6317700001:mutacth@waterdb.e39wv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://6317700001:mutacth@waterdb.e39wv.mongodb.net/waterDatas?retryWrites=true&w=majority');
 const hardwareId = mongoose.model('hardwareData', { id: String });
-const waterValue = mongoose.model('WaterValue', {id: String ,value: Number, timestamp: String});
+const waterValue = mongoose.model('WaterValue', {id: String ,total_water: Number , total_usage: Number ,timestamp: String});
 
 client.on('connect', function () {
   client.subscribe('watervalue/1', function (err) {
