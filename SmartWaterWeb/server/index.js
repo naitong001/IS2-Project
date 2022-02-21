@@ -35,7 +35,7 @@ client.on('message', function (topic, message) {
     //JSON PART 
     const jsonck = JSON.parse(message);
     console.log(jsonck);
-    const wvalue = new waterValue({ id: jsonck.id ,value: jsonck.total_usage, timestamp: dayjs().format('ddd DD/MM/YYYY')});
+    const wvalue = new waterValue({ id: jsonck.id, total_water:jsonck.total_water ,total_usage: jsonck.total_usage, timestamp: dayjs().format('ddd DD/MM/YYYY')});
     /*console.log(dayjs().startOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().endOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().subtract(1, 'week').startOf('week').format('ddd DD/MM/YYYY'));*/
