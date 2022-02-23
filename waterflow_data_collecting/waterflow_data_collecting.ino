@@ -15,7 +15,7 @@ byte uuidNumber[16]; // UUIDs in binary form are 16 bytes long
 char uid[37];
 char idNum[37];
 
-bool check_id = false; //Check id to send through MQTT (addr = 38)
+bool check_id = false; //Check id to send through MQTT (addr = 38-39)
 
 const char* ssid = "Bannruksa";
 const char* pass = "BEE52538";
@@ -36,7 +36,7 @@ float units = 0;
 float total2 = 0;
 float units2 = 0;*/
 
-//Struct For EEPROM (addr = 39)
+//Struct For EEPROM (addr = 40)
 struct backupData {
   float b_total;
   float b_water;
@@ -118,7 +118,7 @@ void setup() {
   //Set up EEPROM
   EEPROM.begin(512);
   Serial.begin(9600);
-  EEPROM.get(39, backupData);
+  EEPROM.get(40, backupData);
 
   //Generate Hardware ID
   //hardwareId += String(random(0xffff), HEX);
@@ -229,7 +229,7 @@ void loop () {
     Serial.print("\n");
     Serial.print(backupData.check_id);
     Serial.print("\n");*/
-  EEPROM.put(39, backupData);
+  EEPROM.put(40, backupData);
   EEPROM.commit();
   delayTime++;
   client.loop();
