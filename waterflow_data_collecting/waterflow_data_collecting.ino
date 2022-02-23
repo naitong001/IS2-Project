@@ -10,12 +10,12 @@
 #include <EEPROM.h>
 #include "ESP8266TrueRandom.h"
 
-//byte for uuid
+//byte for uuid (addr = 0-37)
 byte uuidNumber[16]; // UUIDs in binary form are 16 bytes long
 char uid[37];
 char idNum[37];
 
-bool check_id = false; //Check id to send through MQTT
+bool check_id = false; //Check id to send through MQTT (addr = 38)
 
 const char* ssid = "Bannruksa";
 const char* pass = "BEE52538";
@@ -36,7 +36,7 @@ float units = 0;
 float total2 = 0;
 float units2 = 0;*/
 
-//Struct For EEPROM
+//Struct For EEPROM (addr = 39)
 struct backupData {
   float b_total;
   float b_water;
@@ -118,7 +118,7 @@ void setup() {
   //Set up EEPROM
   EEPROM.begin(512);
   Serial.begin(9600);
-  EEPROM.get(38, backupData);
+  EEPROM.get(39, backupData);
 
   //Generate Hardware ID
   //hardwareId += String(random(0xffff), HEX);
@@ -168,7 +168,7 @@ void loop () {
   //Serial.println(WiFi.localIP());
 
   //Check send ID **CHANGE check_id to number**  USE LATER***************************************************************************
-  if (check_id != true) {
+  if (EEPROM.read(38) != true) {
     //send hardware id to server
     EEPROM_read(0, 37).toCharArray(idNum, 37);
     client.publish(outTopic2, idNum);
