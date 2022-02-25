@@ -157,6 +157,10 @@ void setup() {
 }
 
 void loop () {
+  //Set Variable
+  units = backupData.b_water;
+  total = backupData.b_total;
+  
   //Connect MQTT
   if (!client.connected())
   {
@@ -206,7 +210,7 @@ void loop () {
   //Send data to HiveMQ
   if (delayTime == 5) {
     char outPayload[1000] = "";
-    sprintf(outPayload, "{\"id\": \"%s\", \"total_water\" : %d.%02d ,\"total_usage\" : %d.%02d}" , uid, (int)units, (int)(units * 100) % 100 ,(int)total, (int)(total * 100) % 100);
+    sprintf(outPayload, "{\"id\": \"%s\", \"total_water\" : %d.%02d ,\"total_usage\" : %d.%02d}" , uid, (int)backupData.b_water, (int)(backupData.b_water * 100) % 100 ,(int)backupData.b_total, (int)(backupData.b_total * 100) % 100);
     Serial.print(outPayload);
     Serial.print("\n");
     //if condition no id = gen , have id = send watervalue
@@ -245,7 +249,7 @@ void waterCount() {
   cli();           //Disable interrupts
   Calc = (NbTopsFan * 60 / 7.5); //(Pulse frequency x 60) / 7.5Q, = flow rate in L/hour
   Calc_sec = (NbTopsFan * 60 / 7.5) / 3600; //(Pulse frequency x 60) / 7.5Q, = flow rate in L/sec
-  units = units + Calc_sec;
+  units = backupData.b_water + Calc_sec;
 
   /*Calc2 = (NbTopsFan2 * 60 / 7.5); //(Pulse frequency x 60) / 7.5Q, = flow rate in L/hour
   Calc_sec2 = (NbTopsFan2 * 60 / 7.5) / 3600; //(Pulse frequency x 60) / 7.5Q, = flow rate in L/sec
