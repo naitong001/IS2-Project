@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 try{
 mongoose.connect('mongodb+srv://6317700001:mutacth@waterdb.e39wv.mongodb.net/waterDatas?retryWrites=true&w=majority');
 const hardwareId = mongoose.model('hardwareData', { id: String });
-const waterValue = mongoose.model('WaterValue', {id: String ,total_water: Number , total_usage: Number ,timestamp: String});
+const waterValue = mongoose.model('WaterUsage', {id: String ,total_water: Number , total_usage: Number ,timestamp: Number});
 
 client.on('connect', function () {
   client.subscribe('watervalue/1', function (err) {
@@ -35,7 +35,7 @@ client.on('message', function (topic, message) {
     //JSON PART 
     const jsonck = JSON.parse(message);
     console.log(jsonck);
-    const wvalue = new waterValue({ id: jsonck.id, total_water:jsonck.total_water ,total_usage: jsonck.total_usage, timestamp: dayjs().format('ddd DD/MM/YYYY')});
+    const wvalue = new waterValue({ id: jsonck.id, total_water:jsonck.total_water ,total_usage: jsonck.total_usage, timestamp: dayjs().unix()});
     /*console.log(dayjs().startOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().endOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().subtract(1, 'week').startOf('week').format('ddd DD/MM/YYYY'));*/
@@ -49,10 +49,11 @@ client.on('message', function (topic, message) {
   console.log(message.toString())
 })
 
-app.get('/', (req, res) => {
-  const kitty = new Cat({ name: 'Zildjian' });
+//Get all Data
+app.get('/', async(req, res) => {
+  //const kitty = new Cat({ name: 'Zildjian' });
   //kitty.save().then(() => console.log('meow'));
-  res.send('Bello World!')
+  //res.send('Bello World!')
 })
 
 app.listen(port, () => {
@@ -64,4 +65,3 @@ catch(err){
 }
 
 //}
-//////

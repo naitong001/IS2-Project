@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "dayjs": "^1.10.7",
     "express": "^4.17.1",
     "mongoose": "^6.1.7",
-    "mqtt": "^4.2.8"
+    "mqtt": "^4.2.8",
+    "nodemon": "^2.0.15"
   }
 }
