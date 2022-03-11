@@ -34,11 +34,12 @@ client.on('message', function (topic, message) {
   if(topic == 'watervalue/1'){
     //JSON PART 
     const jsonck = JSON.parse(message);
-    console.log(jsonck);
+    //console.log(jsonck);
     const wvalue = new waterValue({ id: jsonck.id, total_water:jsonck.total_water ,total_usage: jsonck.total_usage, timestamp: dayjs().unix()});
     /*console.log(dayjs().startOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().endOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().subtract(1, 'week').startOf('week').format('ddd DD/MM/YYYY'));*/
+    //console.log(wvalue);
     wvalue.save();
   }
   if(topic == 'hwid/1'){
@@ -49,11 +50,14 @@ client.on('message', function (topic, message) {
   console.log(message.toString())
 })
 
-//Get all Data
+//Get week Data
 app.get('/', async(req, res) => {
   //const kitty = new Cat({ name: 'Zildjian' });
   //kitty.save().then(() => console.log('meow'));
   //res.send('Bello World!')
+  const [targetData] = await waterValue.find({timestamp : {$gte: dayjs().endOf('week').startOf('day').unix(), $lt: dayjs().endOf('week').endOf('day').unix()}}).sort({total_usage : -1}).limit(1);
+  console.log(targetData.total_usage);
+  res.send(targetData);
 })
 
 app.listen(port, () => {
