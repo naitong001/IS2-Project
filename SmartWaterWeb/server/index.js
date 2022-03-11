@@ -39,7 +39,7 @@ client.on('message', function (topic, message) {
     /*console.log(dayjs().startOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().endOf('week').format('ddd DD/MM/YYYY'));
     console.log(dayjs().subtract(1, 'week').startOf('week').format('ddd DD/MM/YYYY'));*/
-    //console.log(wvalue);
+    console.log(wvalue);
     wvalue.save();
   }
   if(topic == 'hwid/1'){
