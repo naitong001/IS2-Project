@@ -12,7 +12,7 @@ export default function Chart({title, data, dataKey}) {
             <h3 className="chartTitle">{title}</h3>
             <ResponsiveContainer width="100%" aspect={4 / 1}>
                 <BarChart data={data}>
-                    <XAxis dataKey="name" stroke="#5550bd"/>
+                    <XAxis dataKey="_id" stroke="#5550bd"/>
                     <YAxis stroke="#5550bd"/>
                     <Tooltip />
                     <Legend />

@@ -1,0 +1,66 @@
+db.collection.aggregate([
+  {
+    "$project": {
+      _id: 0,
+      id: 1,
+      total_usage: 1,
+      timestamp: {
+        "$month": "$timestamp"
+      }
+    }
+  },
+  {
+    "$match": {
+      total_usage: {
+        $gte: 1
+      }
+    }
+  }
+])
+
+
+
+[
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 0.27,
+    total_usage: 0,
+    timestamp: 1645833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 1001.0,
+    total_usage: 1,
+    timestamp: 1646833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 2001.0,
+    total_usage: 2,
+    timestamp: 1646833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 2001.0,
+    total_usage: 2,
+    timestamp: 1647833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 2001.0,
+    total_usage: 2,
+    timestamp: 1648833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 2001.0,
+    total_usage: 2,
+    timestamp: 1649833600
+  },
+  {
+    id: "c217cb7e-131f-48dc-8a67-4080ee595b3f",
+    total_water: 2001.0,
+    total_usage: 2,
+    timestamp: 1650833600
+  }
+]
