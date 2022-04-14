@@ -59,6 +59,18 @@ const maxUsagePerMonth = {
   }
 }
 
+const FilterSelectedYear = (YearId) => {
+  return {
+    $match: {
+      $expr: {
+        $and: [
+          { $eq: [{ $year: "$ISOtimestamp" }, +YearId] }
+        ],
+      },
+    }
+  }
+}
+
 
 //main().catch(err => console.log(err));
 
@@ -103,18 +115,33 @@ try {
   })
 
   //Get week Data
-  app.get('/', async (req, res) => { //week/:monthid
+  app.get('/week/:monthid', async (req, res) => {
     //const kitty = new Cat({ name: 'Zildjian' });
     //kitty.save().then(() => console.log('meow'));
     //res.send('Bello World!')
     console.log(req.params.monthid);
     const targetData = await waterValue.aggregate([
       addConvertUnixToDate,
-      //addWeekOfmonthField,
-      //FilterSelectedMonth(req.params.monthid),
-      //maxUsagePerWeekInMonth
+      addWeekOfmonthField,
+      FilterSelectedMonth(req.params.monthid),
+      maxUsagePerWeekInMonth
+      
+    ]).sort("_id");
+    console.log(targetData);
+    res.send(targetData);
+  })
+
+  app.get('/month/:yearid', async (req, res) => {
+    //const kitty = new Cat({ name: 'Zildjian' });
+    //kitty.save().then(() => console.log('meow'));
+    //res.send('Bello World!')
+    console.log(req.params.yearid);
+    const targetData = await waterValue.aggregate([
+      addConvertUnixToDate,
       addMonthofYearField,
+      FilterSelectedYear(req.params.yearid),
       maxUsagePerMonth
+      
     ]).sort("_id");
     console.log(targetData);
     res.send(targetData);

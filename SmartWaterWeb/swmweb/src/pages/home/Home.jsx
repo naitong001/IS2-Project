@@ -57,7 +57,7 @@ export default function Home() {
             console.log(data)
         }
         else{
-            const month = await axios.get(`http://localhost:5000/week/${event.target.value}`)
+            const month = await axios.get(`http://localhost:5000/month/${event.target.value}`)
             console.log(month.data)
             setData(month.data)
             console.log(data)
@@ -88,9 +88,10 @@ export default function Home() {
                         onChange={handleChange}
                     >
                         {Object.keys(changeDropDown()).map(key => {
-                            return <MenuItem value={monthValue[key]}>{key}</MenuItem>
+                            return <MenuItem value={changeDropDown()[key]}>{key}</MenuItem>
                         })}
                     </Select>
+                    
                 </FormControl>
             </Box>
             <Chart data={data} title="Total Water Unit Used" dataKey="maxUsage" />
