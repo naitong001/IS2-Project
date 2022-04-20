@@ -43,7 +43,7 @@ const FilterDate = ({ onChange }) => {
 
     return (
         <Box>
-            <Card sx={{ p: 1, ml: 3, mr: 3 }}>
+            <Card sx={{ p: 1, ml: 3, mr: 3, mb: 3 }}>
                 <Box sx={{ mb: 2 }}>
                     <Button
                         variant={timeType === "week" ? "contained" : "outlined"}

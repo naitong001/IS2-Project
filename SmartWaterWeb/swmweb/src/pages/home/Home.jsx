@@ -10,12 +10,12 @@ import FilterDate from "../../component/FilterDate";
 
 export default function Home() {
     const [data, setData] = useState([]);
-    const [action, setAction] = useState("month");
-    const [timeDuration, setTimeDuration] = useState(null);
+    const [dateType, setDateType] = useState("month");
 
     const handleDateTypeChange = async (val) => {
         const timeType = val.type;
         const time = val.value;
+        setDateType(timeType);
 
         if (timeType === "week") {
             const week = await axios.get(`http://localhost:8000/week/${time}`);
@@ -36,6 +36,7 @@ export default function Home() {
                 data={data}
                 title="Total Water Unit Used"
                 dataKey="maxUsage"
+                dateType={dateType}
             />
             <div className="homeWidgets">
                 <WidgetSm />
