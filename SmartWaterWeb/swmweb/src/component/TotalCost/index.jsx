@@ -14,7 +14,10 @@ import "./style.css";
 
 const YEARS = [2021, 2022, 2023];
 
-const PER_UNIT = 10.2;
+const PER_UNIT = 0.15;
+const WATER_COST = 8.5;
+const MONTHLY = 25;
+const VAT = 0.07;
 
 const displayCost = (monthIndex, value) => {
     if (!value) return 0;
@@ -22,7 +25,7 @@ const displayCost = (monthIndex, value) => {
     const currentMonthUsage = value.find((item) => item._id === monthIndex);
 
     if (currentMonthUsage) {
-        return Math.round(currentMonthUsage.maxUsage * PER_UNIT);
+        return Math.round((currentMonthUsage.maxUsage * PER_UNIT)+(currentMonthUsage.maxUsage * WATER_COST)+MONTHLY+(currentMonthUsage.maxUsage*VAT));
     }
 
     return 0;
