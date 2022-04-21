@@ -25,7 +25,8 @@ const displayCost = (monthIndex, value) => {
     const currentMonthUsage = value.find((item) => item._id === monthIndex);
 
     if (currentMonthUsage) {
-        return Math.round((currentMonthUsage.maxUsage * PER_UNIT)+(currentMonthUsage.maxUsage * WATER_COST)+MONTHLY+(currentMonthUsage.maxUsage*VAT));
+        result = Math.round((currentMonthUsage.maxUsage * PER_UNIT)+(currentMonthUsage.maxUsage * WATER_COST)+MONTHLY);
+        return result+(result*VAT);
     }
 
     return 0;
