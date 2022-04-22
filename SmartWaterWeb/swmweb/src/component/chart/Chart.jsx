@@ -10,11 +10,11 @@ import {
 } from "recharts";
 import { Card } from "@mui/material";
 import { useMemo } from "react";
-import { interpolateData } from "../../common/dateUtils";
+import { getOffsetUsage, interpolateData } from "../../common/dateUtils";
 
 export default function Chart({ title, data, dataKey, dateType }) {
     const interpolatedData = useMemo(() => {
-        return interpolateData(dateType, data);
+        return interpolateData(dateType, getOffsetUsage(data));
     }, [data, dateType]);
 
     return (

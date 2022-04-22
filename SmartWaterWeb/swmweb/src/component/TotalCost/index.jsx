@@ -9,13 +9,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getMonthlyUsage } from "../../apis";
-import { MONTHS } from "../../common/dateUtils";
+import { calculateCost, getOffsetUsage, MONTHS } from "../../common/dateUtils";
 import "./style.css";
 
 const YEARS = [2021, 2022, 2023];
 
-const PER_UNIT = 0.15;
-const WATER_COST = 8.5;
+const RAW_WATER_COST = 0.15;
 const MONTHLY = 25;
 const VAT = 0.07;
 
@@ -25,8 +24,11 @@ const displayCost = (monthIndex, value) => {
     const currentMonthUsage = value.find((item) => item._id === monthIndex);
 
     if (currentMonthUsage) {
-        const result = Math.round((currentMonthUsage.maxUsage * PER_UNIT)+(currentMonthUsage.maxUsage * WATER_COST)+MONTHLY);
-        return result+(result*VAT);
+        const cost =
+            calculateCost(currentMonthUsage.maxUsage) +
+            currentMonthUsage.maxUsage * RAW_WATER_COST +
+            MONTHLY;
+        return Math.round(cost + cost * VAT);
     }
 
     return 0;
@@ -41,7 +43,7 @@ export default function TotalCost() {
         (async () => {
             try {
                 const resp = await getMonthlyUsage(year);
-                setData(resp.data);
+                setData(getOffsetUsage(resp.data));
             } catch (error) {
                 console.error(error);
             } finally {
