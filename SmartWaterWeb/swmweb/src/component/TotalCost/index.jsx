@@ -30,6 +30,9 @@ const displayCost = (monthIndex, value) => {
             MONTHLY;
         return Math.round(cost + cost * VAT);
     }
+    else{
+        return Math.round(MONTHLY + MONTHLY * VAT);
+    }
 
     return 0;
 };
