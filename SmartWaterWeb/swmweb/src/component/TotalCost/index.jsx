@@ -29,12 +29,39 @@ const displayCost = (monthIndex, value) => {
             currentMonthUsage.maxUsage * RAW_WATER_COST +
             MONTHLY;
         return Math.round(cost + cost * VAT);
-    }
-    else{
+    } else {
         return Math.round(MONTHLY + MONTHLY * VAT);
     }
+};
 
-    return 0;
+const getDepthCost = (monthIndex, value) => {
+    if (!value) return 0;
+
+    const currentMonthUsage = value.find((item) => item._id === monthIndex);
+
+    if (currentMonthUsage) {
+        const vat =
+            (calculateCost(currentMonthUsage.maxUsage) +
+                currentMonthUsage.maxUsage * RAW_WATER_COST +
+                MONTHLY) *
+            VAT;
+
+        return {
+            stepCost:
+                Math.round(calculateCost(currentMonthUsage.maxUsage) * 100) /
+                100,
+            rawWater:
+                Math.round(currentMonthUsage.maxUsage * RAW_WATER_COST * 100) /
+                100,
+            vat: Math.round(vat * 100) / 100,
+        };
+    } else {
+        return {
+            stepCost: 0,
+            rawWater: 0,
+            vat: Math.round(MONTHLY * VAT * 100) / 100,
+        };
+    }
 };
 
 export default function TotalCost() {
@@ -96,18 +123,25 @@ export default function TotalCost() {
                         </tr>
                     </thead>
                     <tbody>
-                        {MONTHS.map((val, index) => (
-                            <tr className="widgetLgTr" key={index}>
-                                <td className="widgetLgMonth">
-                                    <span className="WidgetLgMonthName">
-                                        {val}
-                                    </span>
-                                </td>
-                                <td className="widgetLgCost">
-                                    {displayCost(index + 1, data)} Baht
-                                </td>
-                            </tr>
-                        ))}
+                        {MONTHS.map((val, index) => {
+                            const depthCost = getDepthCost(index + 1, data);
+
+                            return (
+                                <tr className="widgetLgTr" key={index}>
+                                    <td className="widgetLgMonth">
+                                        <span className="WidgetLgMonthName">
+                                            {val}
+                                        </span>
+                                    </td>
+                                    <td className="widgetLgCost">
+                                        <div>
+                                            {displayCost(index + 1, data)} Baht
+                                        </div>
+                                        <small>{`ค่าน้ำตั้งต้น (${depthCost.stepCost}) + ค่าน้ำดิบ (${depthCost.rawWater}) + ค่าบริการ (${MONTHLY}) + VAT (${depthCost.vat})`}</small>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             )}
