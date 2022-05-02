@@ -20,12 +20,18 @@ export default function FeaturedInfo() {
         })();
     }, []);
 
+    const renderContent = () => {
+        if (isLoading) return "loading..."
+        if (!data.length) return 0
+        return data[data.length - 1].maxUsage
+    }
+
     return (
         <Card sx={{ p: 1, ml: 3, mr: 3, mb: 3 }}>
             <span>Total Water Unit</span>
             <div>
                 <span className="featuredMoney">
-                    {isLoading ? "loading..." : data[data.length - 1].maxUsage}
+                    {renderContent()}
                 </span>
             </div>
         </Card>
