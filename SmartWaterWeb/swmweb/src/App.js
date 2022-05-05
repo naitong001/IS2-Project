@@ -1,5 +1,4 @@
 import Topbar from "./component/topbar/Topbar";
-import Sidebar from "./component/sidebar/Sidebar";
 import "./app.css";
 import Home from "./pages/home/Home";
 import { Box } from "@mui/material";
