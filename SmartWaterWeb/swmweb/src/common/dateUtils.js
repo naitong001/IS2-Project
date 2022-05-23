@@ -76,7 +76,7 @@ export const calculateCost = (usage) => {
         return (usage % 30) * 10.03 + 255;
     }
 
-    return (usage % 20) * 8.5;
+    return (usage) * 8.5;
 };
 
 export const getOffsetUsage = (data) => {
